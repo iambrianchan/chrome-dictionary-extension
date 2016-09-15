@@ -1,0 +1,3 @@
+This is the source code to a Google Chrome dictionary extension. The translations are provided by Systran.io. Words that users look up are stored locally in Chrome, and through the web app page they can be referenced. As someone interested in natural languages, I was deeply interested in building a tool that would allow me to quickly translate words into English without needing to switch pages. This project allows me to do so and keep track of my progress.
+
+The extension can be found here: https://chrome.google.com/webstore/detail/deesfrit-to-en-dictionary/ffneppbighnaomnchjlhahjkbhoahlfj?authuser=1
