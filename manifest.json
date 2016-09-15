@@ -1,0 +1,50 @@
+{
+  "manifest_version": 2,
+
+  "name": "DE/ES/FR/IT to EN Dictionary",
+  "description": "Lookup English translations of words and highlight them on the page.",
+  "version": "0.0.0.5",
+
+  "browser_action": {
+    "default_icon": "public/source/img/dict.png"
+  },
+  "background": {
+    "scripts": ["public/source/js/background.js"]
+  },
+  "commands": {
+    "toggle-feature-search": {
+    "suggested_key": {
+      "default": "Ctrl+Shift+U",
+      "windows": "Ctrl+Shift+U",
+      "mac": "Command+Shift+U",
+      "chromeos": "Ctrl+Shift+U",
+      "linux": "Ctrl+Shift+U"
+    },
+      "description": "Toggle Keyboard Search"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["public/source/js/contentscript.js"],
+      "css": ["public/source/css/content.css"]
+    }
+  ],
+  "icons": {
+      "16": "public/source/img/16.png",
+      "48": "public/source/img/48.png",
+      "128": "public/source/img/128.png"
+    },
+  "permissions": [
+    "storage",
+    "contextMenus",
+    "webNavigation"
+  ],
+  "web_accessible_resources": [
+    "public/source/img/originals/de.png",
+    "public/source/img/originals/es.png",
+    "public/source/img/originals/fr.png",
+    "public/source/img/originals/it.png",
+    "public/source/img/glassGRAY.png"
+  ]
+}
