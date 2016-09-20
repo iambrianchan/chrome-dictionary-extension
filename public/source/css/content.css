@@ -11,7 +11,7 @@ div.dictionarypopup {
 	border-radius: 16px;
 	z-index: 999;
 	font-weight: normal;
-	font-size: 16px;
+	font-size: 14px;
 	opacity: .9;
 	left: 30%;
 }
@@ -23,17 +23,19 @@ div.dictionarypopup > div {
 div.dictionarypopup > div div.dictionarypopupinfo {
 	text-align: center;
 }
-
-div.dictionarypopup > div div.dictionarypopupinfo > span.inflection {
-	font-size: 12px;
-}
 span.dictionarypopupterm {
 	font-weight: bold;
 }
 div.dictionarypopup > div div.dictionarypopupmeaning p {
 	margin: 0px 0px 0px 0px;
 }
-
+div.dictionarypopup > div div.dictionarypopupmeaning p > span.enumerable {
+	font-weight: bold;
+	font-size: 16px;
+}
+div.dictionarypopup > div div.dictionarypopupmeaning p > span.example {
+	font-style: italic;
+}
 p span.custom-dictionary {
 	cursor: default;
 }
@@ -42,14 +44,14 @@ div.globalsearchcontainer {
 	display: block;
 	position: fixed;
 	align-items: center;
-	top: 20%;
+	top: 40%;
 	left: 50%;
 	transform: translateX(-50%);
 	min-height: 60px;
 	background-color: #434647;
 	color: white;
 	width: 30%;
-	border-radius: 6px;
+	border-radius: 16px;
 	z-index: 999;
 	opacity: .9;
 }
@@ -77,11 +79,21 @@ div.globalsearchcontainer.hide {
 div.globalsearchcontainer > div {
 	width: 100%;
 }
+div.globalsearchcontainer > div.definitions {
+	font-size: 14px;
+}
+div.globalsearchcontainer > div.definitions > p > span.enumerable {
+	font-weight: bold;
+	font-size: 16px;
+}
 div.globalsearchcontainer > div.definitions > p {
 	margin-left: 10px;
 }
 div.globalsearchcontainer > div.definitions > div {
 	margin-left: 15px;
+}
+div.globalsearchcontainer > div.definitions > div.definition > p > span {
+	font-style: italic;
 }
 div.globalsearchcontainer > div.searchbar > div {
 	width: 160px;

@@ -16,18 +16,18 @@ function createDictionaryPopup(word) {
 		// set the term name element
 		var term = document.createElement("span");
 		term.className = "dictionarypopupterm"
-		term.textContent = partOfSpeech.term + ' ';
+		term.textContent = partOfSpeech.term + ' | ';
 
 		// create and set the part of speech element
 		var pos = document.createElement("span")
-		pos.textContent = '[' + partOfSpeech.pos + ']' + ' ';
+		pos.textContent = partOfSpeech.pos + ' | ';
 
 		// append the items to the info (quick info)
 		// inflection whether it has a plural value or not
 		info.appendChild(term);
 		if (partOfSpeech.inflection) {
 			var inflection = document.createElement("span")
-			inflection.textContent = partOfSpeech.inflection + " ";
+			inflection.textContent = partOfSpeech.inflection + " | ";
 			inflection.className += " inflection";
 			info.appendChild(inflection);
 		}
@@ -35,7 +35,7 @@ function createDictionaryPopup(word) {
 		// create and set the phonetic spelling of a word
 		if (partOfSpeech.phonetic) {
 			var phonetic = document.createElement("span");
-			phonetic.textContent = partOfSpeech.phonetic + ' ';
+			phonetic.textContent = partOfSpeech.phonetic + ' | ';
 			info.appendChild(phonetic);
 		}
 
@@ -54,14 +54,30 @@ function createDictionaryPopup(word) {
 
 		// create and set the meaning of the particular part of speech
 		if (partOfSpeech.meanings[0].meaning) {
-			var meaningText = document.createElement("p");
+			var meaningContent = document.createElement("p");
+			var number = document.createElement("span");
+			number.className = "enumerable";
+			var meaningText = document.createElement("span");
+			number.textContent = i + 1 + " ";
+			meaningContent.appendChild(number);
 			meaningText.textContent = "Meaning: " + partOfSpeech.meanings[0].meaning;
-			meaning.appendChild(meaningText);
+			meaningContent.appendChild(meaningText);
+			meaning.appendChild(meaningContent);
 		}
 		// create and set an associated expression.
 		if (partOfSpeech.meanings[0].expressions[0]) {
 			var expression = document.createElement("p");
-			expression.textContent = partOfSpeech.meanings[0].expressions[0].source + "\n" + partOfSpeech.meanings[0].expressions[0].target;
+			var target = document.createElement("span");
+			var source = document.createElement("span");
+			target.className = "example";
+			source.className = "example";
+			var linebreak = document.createElement("br");
+			target.textContent = partOfSpeech.meanings[0].expressions[0].target;
+			source.textContent = partOfSpeech.meanings[0].expressions[0].source;
+			expression.appendChild(source)
+			expression.appendChild(linebreak)
+			expression.appendChild(target);
+			// expression.textContent = partOfSpeech.meanings[0].expressions[0].source + "\n" + partOfSpeech.meanings[0].expressions[0].target;
 			meaning.appendChild(expression);
 		}	
 		// create and set related words.
@@ -95,19 +111,23 @@ function createSearchBarDefinition(word) {
 		var term, phonetic, pos, inflection, meaning, related, example;
 		var heading = document.createElement("p");
 		var content = document.createElement("div");
+		var number = document.createElement("span");
+		number.className = "enumerable";
+		heading.appendChild(number);
+		number.textContent = i + 1 + " ";
 		if (word[0].partsOfSpeech[i].term) {
 			term = document.createElement("span");
-			term.textContent = word[0].partsOfSpeech[i].term + ' ';
+			term.textContent = word[0].partsOfSpeech[i].term + ' | ';
 			heading.appendChild(term);
 		}
 		if (word[0].partsOfSpeech[i].phonetic) {
 			phonetic = document.createElement("span");
-			phonetic.textContent = word[0].partsOfSpeech[i].phonetic + ' ';
+			phonetic.textContent = word[0].partsOfSpeech[i].phonetic + ' | ';
 			heading.appendChild(phonetic);
 		}
 		if (word[0].partsOfSpeech[i].pos) {
 			pos = document.createElement("span");
-			pos.textContent = '[' + word[0].partsOfSpeech[i].pos + '] ';
+			pos.textContent = word[0].partsOfSpeech[i].pos + ' | ';
 			heading.appendChild(pos);
 		}
 		if (word[0].partsOfSpeech[i].inflection) {
@@ -117,18 +137,25 @@ function createSearchBarDefinition(word) {
 		}
 		if (word[0].partsOfSpeech[i].meanings.length > 0) {
 			meaning = document.createElement("p");
-			meaning.textContent = word[0].partsOfSpeech[i].meanings[0].meaning;
+			meaning.textContent = "Meaning: " + word[0].partsOfSpeech[i].meanings[0].meaning;
 			content.appendChild(meaning);
 		}
 		if (word[0].partsOfSpeech[i].related) {
 			related = document.createElement("p");
-			related.textContent = word[0].partsOfSpeech[i].related.join(', ');
+			related.textContent = "Thesaurus: " + word[0].partsOfSpeech[i].related.join(', ');
 			content.appendChild(related);
 		}
 		if (word[0].partsOfSpeech[i].expressions) {
 			example = document.createElement("p");
-			example.textContent = word[0].partsOfSpeech[i].expressions[0].source + '\n' + word[0].partsOfSpeech[i].expressions[0].target; 
-			content.appendChild(example);
+			var target = document.createElement("span");
+			target.textContent = word[0].partsOfSpeech[i].expressions[0].target;
+			var source = document.createElement("span");
+			source.textContent = word[0].partsOfSpeech[i].expressions[0].source;
+			var linebreak = document.createElement("br");
+			example.appendChild(source)
+			example.appendChild(linebreak)
+			example.appendChild(target);
+			content.appendChild(example)
 		}
 		content.className = "definition";
 		definition.appendChild(heading);
@@ -263,18 +290,19 @@ function createElement(item, words) {
 				end = 0;
 				resultElements = [];
 				for (var i = 0; i < content.length; i++) {
+					// push the item we created.
 					if (typeof content[i] == "object") {
-						end = i;
-						var text = content.slice(start, end).join(' ');
-						var textNode = document.createTextNode(text);
-						resultElements.push(text);
 						resultElements.push(content[i]);
-						start = i + 1;
 					}
 					else if (i == content.length - 1) {
-						var text = content.slice(start, i).join(' ');
-						var textNode = document.createTextNode(text);
-						resultElements.push(text);
+						// if the last word is a regular text push it without space.
+						var textNode = document.createTextNode(content[i]);
+						resultElements.push(textNode);
+					}
+					else {
+						// else push the word with a space.
+						var textNode = document.createTextNode(content[i] + " ");
+						resultElements.push(textNode);
 					}
 				}
 				for (var i = resultElements.length - 1; i >= 0; i--) {
@@ -282,6 +310,7 @@ function createElement(item, words) {
 						item.parentNode.insertBefore(document.createTextNode(resultElements[i] + ' '), item.nextSibling);							
 					}
 					else {
+						console.log(resultElements[i]);
 						item.parentNode.insertBefore(resultElements[i], item.nextSibling);
 					}
 				}
