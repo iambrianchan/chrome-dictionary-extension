@@ -5,8 +5,48 @@ body {
 	font-family: 'Hind Guntur', sans-serif;
 }
 div.content {
+	background-color: #F2F2F2;
+	height: 100vh;
+}
+div.instructions-clickable {
+	padding-top: 20px;
+	padding-left: 20px;
+}
+div.instructions-clickable a {
+	cursor: pointer;
+	text-decoration: none;
+	text-shadow: 1px 1px black;
+	font-size: 16px;
+	font-weight: bold;
+	color: #327A4F;
+}
+div.instructions.hide {
+	display: none;
+}
+div.instructions {
+	display: block;
+	position: absolute;
 	background-color: #FADBAE;
-	min-height: 100vh;
+	border-radius: 16px;
+	width: 60%;
+	left: 20%;
+	z-index: 10;
+	box-shadow: 3px 3px 9px black;
+}
+div.instructions button.delete {
+	top: 1px;
+	right: 1px;
+}
+div.instructions h2 {
+	text-align: center;
+	text-shadow: 1px 1px 1px;
+}
+div.instructions p {
+	margin-left: 15px;
+}
+div.instructions p.instruction-option {
+	margin-left: 50px;
+	font-weight: bold;
 }
 div.languages {
 	text-align: center;
@@ -42,23 +82,32 @@ div.content > div.search {
 div.content > div.search > input {
 	width: 20%;
 } 
+div.words {
+	margin-right: 0px;
+	margin-left: 0px;
+}
 div.words div.word {
 	height: 375px;
 	overflow: scroll;
 	width: 75%;
 	margin: 0 auto;
 }
+div.words div.word > h2 {
+	text-shadow: 0px 0px 1px black;
+}
 div.words div.word > div > hr.divider {
 	border-color: black;
 }
 button.delete {
 	position: absolute;
+	outline: none;
 	top: 20px;
 	right: 15%;
-	border: 2px solid black;
+	border: none;
 	border-radius: 16px;
+	box-shadow: 1px 1px 1px black;
 	background-color: #D9534F;
-	padding: 3px 6px 3px 6px;
+	padding: 1px 4px 1px 4px;
 }
 button > span {
 	vertical-align: middle;

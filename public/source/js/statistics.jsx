@@ -7,6 +7,7 @@ var statistics = React.createClass({
 			filteredDictionary: [],
 			activeLanguage: "",
 			activeQuery: "",
+			showInstructions: false,
 			showOptions: false
 		}
 	},
@@ -14,6 +15,12 @@ var statistics = React.createClass({
         return {
             items: []
         }
+    },
+    toggleInstructions: function() {
+    	this.setState({ showInstructions: !this.state.showInstructions });
+    },
+    toggleOptions: function() {
+    	this.setState({ showOptions: !this.state.showOptions });
     },
     setActiveDictionary: function(language) {
     	var activeDictionary = this.state.dictionaries[language];
@@ -37,10 +44,6 @@ var statistics = React.createClass({
 				this.refreshDictionaries();			
 			}.bind(this));
     	}.bind(this))
-    },
-    toggleOptions: function() {
-    	this.setState({ showOptions: !this.state.showOptions }, function() {
-    	});
     },
     deleteDictionary: function(language) {
     	if (language == 'all') {
@@ -133,8 +136,26 @@ var statistics = React.createClass({
     		}.bind(this));
     		content = <div className="words row">{items}</div>;
     	}
+    	var instructionsClass = this.state.showInstructions ? "instructions" : "instructions hide"
+    	var instructions = function createInstructions() {
+    		return (
+    			<div className = {instructionsClass}>
+    				<h2>Instructions:</h2>
+    				<button className="delete" onClick={this.toggleInstructions}><span className="glyphicon glyphicon-remove"></span></button>
+    				<p>
+    					This extension allows users to lookup single word definitions on page. Users can find English translations to French, German, Italian and Spanish words.
+    				</p>
+    				<p>There are two ways to look up words:</p>
+    				<p className="instruction-option">1 <i>Bring up the built in search bar by using "Command + Shift + U" on Mac or "Ctrl + Shift + U" on Windows.</i></p>
+    				<p className="instruction-option">2 <i>Select the target word and right click, and select the target language to translate to in the drop down menu.</i></p>
+    				<p>When words are looked up they will automatically be shown here on this page for later reference.</p>
+					<p>In addition, the font of looked up words will change automatically on the page, and the definition will pop up when it is hovered over.</p>
+    			</div>
+    		)
+    	}.bind(this)();
         return (
             <div className="content">
+            <div className="instructions-clickable" onClick={this.toggleInstructions}><a>How to...</a></div>
             <div className="languages">
             {
             	this.state.languages.map(function loop(language, i) {
@@ -157,6 +178,7 @@ var statistics = React.createClass({
   			</div>}
             </div>
             {this.state.activeDictionary.length > 0 && <div className="search"><input type="text" placeholder="Search for a word" value={this.activeQuery} onChange={this.filterDictionary.bind(this, this.activeQuery)}></input></div>}
+            {instructions}
             {content}
             </div>
         )

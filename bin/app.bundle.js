@@ -21468,6 +21468,7 @@
 				filteredDictionary: [],
 				activeLanguage: "",
 				activeQuery: "",
+				showInstructions: false,
 				showOptions: false
 			}
 		},
@@ -21475,6 +21476,12 @@
 	        return {
 	            items: []
 	        }
+	    },
+	    toggleInstructions: function() {
+	    	this.setState({ showInstructions: !this.state.showInstructions });
+	    },
+	    toggleOptions: function() {
+	    	this.setState({ showOptions: !this.state.showOptions });
 	    },
 	    setActiveDictionary: function(language) {
 	    	var activeDictionary = this.state.dictionaries[language];
@@ -21498,10 +21505,6 @@
 					this.refreshDictionaries();			
 				}.bind(this));
 	    	}.bind(this))
-	    },
-	    toggleOptions: function() {
-	    	this.setState({ showOptions: !this.state.showOptions }, function() {
-	    	});
 	    },
 	    deleteDictionary: function(language) {
 	    	if (language == 'all') {
@@ -21594,8 +21597,26 @@
 	    		}.bind(this));
 	    		content = React.createElement("div", {className: "words row"}, items);
 	    	}
+	    	var instructionsClass = this.state.showInstructions ? "instructions" : "instructions hide"
+	    	var instructions = function createInstructions() {
+	    		return (
+	    			React.createElement("div", {className: instructionsClass}, 
+	    				React.createElement("h2", null, "Instructions:"), 
+	    				React.createElement("button", {className: "delete", onClick: this.toggleInstructions}, React.createElement("span", {className: "glyphicon glyphicon-remove"})), 
+	    				React.createElement("p", null, 
+	    					"This extension allows users to lookup single word definitions on page. Users can find English translations to French, German, Italian and Spanish words."
+	    				), 
+	    				React.createElement("p", null, "There are two ways to look up words:"), 
+	    				React.createElement("p", {className: "instruction-option"}, "1 ", React.createElement("i", null, "Bring up the built in search bar by using \"Command + Shift + U\" on Mac or \"Ctrl + Shift + U\" on Windows.")), 
+	    				React.createElement("p", {className: "instruction-option"}, "2 ", React.createElement("i", null, "Select the target word and right click, and select the target language to translate to in the drop down menu.")), 
+	    				React.createElement("p", null, "When words are looked up they will automatically be shown here on this page for later reference."), 
+						React.createElement("p", null, "In addition, the font of looked up words will change automatically on the page, and the definition will pop up when it is hovered over.")
+	    			)
+	    		)
+	    	}.bind(this)();
 	        return (
 	            React.createElement("div", {className: "content"}, 
+	            React.createElement("div", {className: "instructions-clickable", onClick: this.toggleInstructions}, React.createElement("a", null, "How to...")), 
 	            React.createElement("div", {className: "languages"}, 
 	            
 	            	this.state.languages.map(function loop(language, i) {
@@ -21618,6 +21639,7 @@
 	  			)
 	            ), 
 	            this.state.activeDictionary.length > 0 && React.createElement("div", {className: "search"}, React.createElement("input", {type: "text", placeholder: "Search for a word", value: this.activeQuery, onChange: this.filterDictionary.bind(this, this.activeQuery)})), 
+	            instructions, 
 	            content
 	            )
 	        )

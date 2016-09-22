@@ -50,7 +50,7 @@ div.globalsearchcontainer {
 	min-height: 60px;
 	background-color: #434647;
 	color: white;
-	width: 30%;
+	width: 40%;
 	border-radius: 16px;
 	z-index: 999;
 	opacity: .9;
@@ -97,9 +97,11 @@ div.globalsearchcontainer > div.definitions > div.definition > p > span {
 }
 div.globalsearchcontainer > div.searchbar > div {
 	width: 160px;
-	text-align: right;
 	margin-right: 5px;
+	text-align: right;
 	display: inline-block;
+	position: absolute;
+	right: 0px;
 }
 div.globalsearchcontainer div button {
 	border: none;
