@@ -7,10 +7,14 @@ body {
 div.content {
 	background-color: #F2F2F2;
 	height: 100vh;
+	overflow: scroll;
 }
 div.instructions-clickable {
-	padding-top: 20px;
-	padding-left: 20px;
+	display: inline-block;
+	margin: 20px 0px 0px 20px;
+	border-radius: 16px;
+	padding: 6px 6px 6px 6px;
+	background-color: #C1E5E0;
 }
 div.instructions-clickable a {
 	cursor: pointer;

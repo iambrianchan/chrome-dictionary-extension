@@ -310,7 +310,6 @@ function createElement(item, words) {
 						item.parentNode.insertBefore(document.createTextNode(resultElements[i] + ' '), item.nextSibling);							
 					}
 					else {
-						console.log(resultElements[i]);
 						item.parentNode.insertBefore(resultElements[i], item.nextSibling);
 					}
 				}
