@@ -1,4 +1,7 @@
+// contentscript.js
+
 var selectedText = "";
+
 function createDictionaryPopup(word) {
 	var popup = document.createElement("div");
 	popup.className += "custom-dictionary dictionarypopup";
@@ -318,7 +321,7 @@ function createElement(item, words) {
 		}
 	}
 	catch (e) {
-		console.log('an error ocurred adding a definition element to the page', e);
+		// console.log('an error ocurred adding a definition element to the page', e);
 	}
 }
 
@@ -350,47 +353,72 @@ var addEventListeners = function() {
 document.addEventListener('DOMContentLoaded', fireContentLoadedEvent(), false);
 
 // function that adds content for saved words, then calls addEventListeners.addListeners to add event listeners for new elements.
-function fireContentLoadedEvent () {
+function fireContentLoadedEvent (items) {
+
 	// grab currently selected text when mouse moves
 	document.addEventListener("mouseup", function callback() {
+
 		selectedText = window.getSelection().toString();
 	})
+
+	if (items) {
+		updateDOMContent(items);
+	}
+
 	// get all dictionaries from local storage
-	chrome.storage.local.get('dictionaries', function callback(result) {
-		// if there are stored dictionaries create popups for words and add event listeners
-		if (result.dictionaries) {
-			var languages = ['fr', 'es', 'de', 'it'];
-			var divs = document.body.getElementsByTagName("DIV");
-			var lang = document.getElementsByTagName('html')[0].lang;
-			if (result.dictionaries[lang]) {
+	else {
+		chrome.storage.local.get('dictionaries', function callback(result) {
+			updateDOMContent(result)
+		})
+	}
+
+	function updateDOMContent(items) {
+
+		// use stored dictionaries to alter page content
+		var languages, divs, lang;
+		if (items.dictionaries) {
+
+			languages = ['fr', 'es', 'de', 'it'];
+			divs = document.body.getElementsByTagName("DIV");
+			lang = document.getElementsByTagName('html')[0].lang;
+
+			if (items.dictionaries[lang]) {
+
 				for (var i = 0; i < divs.length; i++) {
-						traverse(divs[i], result.dictionaries[lang]);
-						addEventListeners.addListeners(result.dictionaries[lang], lang);
+
+					traverse(divs[i], items.dictionaries[lang]);
+					addEventListeners.addListeners(items.dictionaries[lang], lang);
+
 				}
 			}
 		}
-	})
+	}
 };
 
 // add event listener for page change without new DOM.
 chrome.runtime.onMessage.addListener(
 	function(request, sender, sendResponse) {
-		// if the request contains key "words", then it is a one off lookup and this word should then be found in page and event listeners attached.
-		if (request.words) {
+
+		// if the request contains words object, then it is a one off lookup and this word should then be found in page and event listeners attached.
+		if (request.type == "lookup") {
+
 			createSearchBarDefinition(request.words);
 			var divs = document.body.getElementsByTagName("DIV");
+
 			for (var i = 0; i < divs.length; i++) {
 				traverse(divs[i], request.words);				
 			}
 			addEventListeners.addListeners(request.words, request.language);		
 		}
+
 		// if the message is the result of shortcut keys
-		else if ( (request.toggleSearch != undefined) && !request.dictionaries ) {
+		else if ( request.type == "toggleSearch" ) {
 			toggleSearchBar();
 		}
+
 		// else the DOM may not have reloaded, but page location changed and all words should be found/listeners attached
-		else {
-			fireContentLoadedEvent()
+		else if ( request.type == "historyStateUpdated" ) {
+			fireContentLoadedEvent(request.dictionaries)
 		}
 	}
 );

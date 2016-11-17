@@ -56,6 +56,8 @@ div.globalsearchcontainer {
 	opacity: .9;
 }
 div.globalsearchcontainer > div.searchbar {
+	margin: 0;
+	text-align: left;
 	line-height: 60px;
 }
 div.globalsearchcontainer span.glass img {
@@ -63,6 +65,7 @@ div.globalsearchcontainer span.glass img {
 	margin-left: 15px;
 }
 div.globalsearchcontainer input {
+	font-size: 18px;
 	color: white;
 	width: 50%;
 	padding-left: 10px;

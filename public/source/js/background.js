@@ -1,3 +1,5 @@
+// background.js
+
 var server_key = "41d8e95b-6dd4-4db6-a87d-37bb5af6b4fc";
 var toggleSearch = false;
 
@@ -16,7 +18,7 @@ var systranApi = function() {
 				dictionaries.dictionaries[language] = [data];
 
 				chrome.storage.local.set(dictionaries, function callback() {
-					var json = { words: [data], language: language };
+					var json = { words: [data], language: language, type: "lookup" };
 					sendMessage(json);
 				});
 			}
@@ -26,7 +28,7 @@ var systranApi = function() {
 				var languageDict = { dictionaries: items.dictionaries };
 				languageDict.dictionaries[language] = words;
 				chrome.storage.local.set(languageDict, function callback() {
-					var json = { words: words, language: language};
+					var json = { words: words, language: language, type: "lookup"};
 					sendMessage(json);
 				});
 			}
@@ -41,7 +43,7 @@ var systranApi = function() {
 				words.push(data);
 				languageDict.dictionaries[language] = words;
 				chrome.storage.local.set(languageDict, function callback() {
-					var json = { words: [data], language: language };
+					var json = { words: [data], language: language, type: "lookup" };
 					sendMessage(json);
 				});
 			}
@@ -101,8 +103,6 @@ var systranApi = function() {
 	return {
 		lookup: function(word, language) {
 			var data = {};
-			// data.term = word;
-			// word = parseAccents(word);
 			var options = {
 				method: "POST",
 				url: "https://api-platform.systran.net/resources/dictionary/lookup?key="+server_key+ "&source=" + language + "&target=en&autocomplete=false&input="+word,
@@ -226,7 +226,9 @@ function sendMessage (json) {
 
 chrome.webNavigation.onHistoryStateUpdated.addListener(function (details) {
     chrome.storage.local.get('dictionaries', function (items) {
-    	sendMessage(items);
+
+    	var json = {dictionaries: items, type: "historyStateUpdated"};
+    	sendMessage(json);
     })
 });
 chrome.browserAction.onClicked.addListener(function(tab) { 
@@ -238,8 +240,7 @@ chrome.browserAction.onClicked.addListener(function(tab) {
 chrome.commands.onCommand.addListener(function(command) {
 	chrome.tabs.query({active: true, currentWindow: true},
 		function callback(tabs) {
-			chrome.tabs.sendMessage(tabs[0].id, {"toggleSearch": !toggleSearch}, function (response) {
-				toggleSearch = !toggleSearch;
+			chrome.tabs.sendMessage(tabs[0].id, {type: "toggleSearch"}, function (response) {
 			})
 		}
 	);

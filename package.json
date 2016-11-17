@@ -1,6 +1,6 @@
 {
   "name": "dictionary-extension",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Chrome extension for multi language dictionary",
   "main": "index.js",
   "scripts": {
