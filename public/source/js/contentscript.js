@@ -8,28 +8,29 @@ function createDictionaryPopup(word) {
 
 	for (var i = 0; i < word.partsOfSpeech.length; i++) {
 
-		// container holds info and meanings
 		var partOfSpeech = word.partsOfSpeech[i];
-		var container = document.createElement("div");
+		var container, info;
+		// container holds info and meanings
+		container = document.createElement("div");
 
 		// info will contain quick info about a word
-		var info = document.createElement("div");
+		info = document.createElement("div");
 		info.className += "custom-dictionary dictionarypopupinfo";
 
 		// set the term name element
 		var term = document.createElement("span");
-		term.className = "dictionarypopupterm"
+		term.className = "dictionarypopupterm";
 		term.textContent = partOfSpeech.term + ' | ';
 
 		// create and set the part of speech element
-		var pos = document.createElement("span")
+		var pos = document.createElement("span");
 		pos.textContent = partOfSpeech.pos + ' | ';
 
 		// append the items to the info (quick info)
 		// inflection whether it has a plural value or not
 		info.appendChild(term);
 		if (partOfSpeech.inflection) {
-			var inflection = document.createElement("span")
+			var inflection = document.createElement("span");
 			inflection.textContent = partOfSpeech.inflection + " | ";
 			inflection.className += " inflection";
 			info.appendChild(inflection);
@@ -46,7 +47,7 @@ function createDictionaryPopup(word) {
 
 		// create and set a words gender value
 		if (partOfSpeech.gender) {
-			var gender = document.createElement("span")
+			var gender = document.createElement("span");
 			gender.textContent = partOfSpeech.gender;
 			info.appendChild(gender);
 		}
@@ -77,10 +78,9 @@ function createDictionaryPopup(word) {
 			var linebreak = document.createElement("br");
 			target.textContent = partOfSpeech.meanings[0].expressions[0].target;
 			source.textContent = partOfSpeech.meanings[0].expressions[0].source;
-			expression.appendChild(source)
-			expression.appendChild(linebreak)
+			expression.appendChild(source);
+			expression.appendChild(linebreak);
 			expression.appendChild(target);
-			// expression.textContent = partOfSpeech.meanings[0].expressions[0].source + "\n" + partOfSpeech.meanings[0].expressions[0].target;
 			meaning.appendChild(expression);
 		}	
 		// create and set related words.
@@ -102,22 +102,25 @@ function createSearchBarDefinition(word) {
 	var searchbar = document.body.getElementsByClassName("globalsearchcontainer")[0];
 
 	var childDefinitions = searchbar.getElementsByClassName("definitions");
+
 	if (childDefinitions.length > 0) {
-		for (var i = childDefinitions.length - 1; i >= 0; i--) {
-			searchbar = childDefinitions[i].parentNode;
-			searchbar.removeChild(childDefinitions[i]);
-		}
+		searchbar.removeChild(childDefinitions[0]);
 	}
+
+	var container = document.createElement("div");
+	container.className = "definitions";
+
 	for (var i = 0; i < word[0].partsOfSpeech.length; i++) {
 		var definition = document.createElement("div");
-		definition.className = "definitions";
 		var term, phonetic, pos, inflection, meaning, related, example;
+
 		var heading = document.createElement("p");
 		var content = document.createElement("div");
 		var number = document.createElement("span");
 		number.className = "enumerable";
 		heading.appendChild(number);
 		number.textContent = i + 1 + " ";
+
 		if (word[0].partsOfSpeech[i].term) {
 			term = document.createElement("span");
 			term.textContent = word[0].partsOfSpeech[i].term + ' | ';
@@ -166,8 +169,9 @@ function createSearchBarDefinition(word) {
 		if (i != word[0].partsOfSpeech.length - 1) {
 			definition.appendChild(document.createElement("hr"));			
 		}
-		searchbar.appendChild(definition);
+		container.appendChild(definition);
 	}
+	searchbar.appendChild(container);
 }
 function toggleSearchBar() {
 	// create the searchbar
@@ -261,33 +265,37 @@ function createElement(item, words) {
 	try {
 		if (item.parentNode.className.indexOf("custom-dictionary") == -1 && item.parentNode.parentNode.className.indexOf("custom-dictionary") == -1 && item.parentNode.className.indexOf("definition") == -1  && item.parentNode.parentNode.className.indexOf("definition") == -1 && item.parentNode.tagName == "P") {
 			var replace = false;
-			var contentNode = item.cloneNode(true);
+
 			var content = item.textContent.split(' ').map(function transformation(word) {
 				for (var i = 0; i < words.length; i++) {
+
+					//create page element
 					if (word.toLowerCase() == words[i].term) {
 						var popup = createDictionaryPopup(words[i]);
 						replace = true;
 						var replacewith = document.createElement("span");
 						replacewith.textContent = word + ' ';
 						replacewith.appendChild(popup);
-						replacewith.className = 'dictionary-' + words[i].term.toLowerCase();
+						replacewith.className = 'dictionary-' + words[i].term;
 						replacewith.className += ' custom-dictionary';
 						return replacewith;
 					}
+					// create page element if word has trailing comma
 					else if (word.toLowerCase() == words[i].term + ',') {
 						var popup = createDictionaryPopup(words[i]);
 						replace = true;
 						var replacewith = document.createElement("span");
 						replacewith.textContent = word + ' ';
 						replacewith.appendChild(popup);
-						replacewith.className = 'dictionary-' + words[i].term.toLowerCase();
+						replacewith.className = 'dictionary-' + words[i].term;
 						replacewith.className += ' custom-dictionary';
 						return replacewith;
 					}
 				}
 				return word;
 			});
-
+			
+			// if the p element has a newly created element
 			if (replace) {
 				var start = 0,
 				end = 0;

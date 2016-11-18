@@ -1,3 +1,7 @@
+/* background.css */
+
+
+/* Background CSS */
 html {
 	-webkit-font-smoothing: antialiased;
 }
@@ -52,6 +56,8 @@ div.instructions p.instruction-option {
 	margin-left: 50px;
 	font-weight: bold;
 }
+
+/* Controls */
 div.languages {
 	text-align: center;
 	margin-bottom: 20px;
@@ -86,6 +92,9 @@ div.content > div.search {
 div.content > div.search > input {
 	width: 20%;
 } 
+
+
+/* Definitions */
 div.words {
 	margin-right: 0px;
 	margin-left: 0px;

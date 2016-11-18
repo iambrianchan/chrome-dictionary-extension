@@ -1,3 +1,7 @@
+/* content.css */
+
+
+/* CSS for the new page elements */
 div.dictionarypopup {
 	display: none;
 	position: absolute;
@@ -40,6 +44,8 @@ p span.custom-dictionary {
 	cursor: default;
 }
 
+
+/* CSS for the quick search bar */
 div.globalsearchcontainer {
 	display: block;
 	position: fixed;
@@ -89,11 +95,13 @@ div.globalsearchcontainer > div.definitions > p > span.enumerable {
 	font-weight: bold;
 	font-size: 16px;
 }
-div.globalsearchcontainer > div.definitions > p {
-	margin-left: 10px;
-}
 div.globalsearchcontainer > div.definitions > div {
+	margin-left: 10px;
+	padding: 5px 0px 0px 0px;
+}
+div.globalsearchcontainer > div.definitions > div > div.definition {
 	margin-left: 15px;
+	padding: 0px 0px 5px 0px;
 }
 div.globalsearchcontainer > div.definitions > div.definition > p > span {
 	font-style: italic;
@@ -124,6 +132,8 @@ div.globalsearchcontainer img.searchlanguage {
 	width: 40px;
 	display: flex;
 }
+
+/* CSS for language colors */
 .dictionary-language-fr {
 	color: #0055A4;	
 }

@@ -8,13 +8,13 @@ var systranApi = function() {
 	function handleSystranResponse(response, word, language) {
 		var data = {};
 		var result = JSON.parse(response);
-		data.term = word;
+		data.term = word.toLowerCase();
 		var partsOfSpeech = parseDictionaryResult(result);
 		data.partsOfSpeech = partsOfSpeech;
 
 		chrome.storage.local.get('dictionaries', function callback(items) {
 			if (!items.dictionaries) {
-				var dictionaries = {dictionaries: {}};
+				var dictionaries = { dictionaries: {} };
 				dictionaries.dictionaries[language] = [data];
 
 				chrome.storage.local.set(dictionaries, function callback() {
@@ -28,7 +28,7 @@ var systranApi = function() {
 				var languageDict = { dictionaries: items.dictionaries };
 				languageDict.dictionaries[language] = words;
 				chrome.storage.local.set(languageDict, function callback() {
-					var json = { words: words, language: language, type: "lookup"};
+					var json = { words: words, language: language, type: "lookup" };
 					sendMessage(json);
 				});
 			}
@@ -227,7 +227,7 @@ function sendMessage (json) {
 chrome.webNavigation.onHistoryStateUpdated.addListener(function (details) {
     chrome.storage.local.get('dictionaries', function (items) {
 
-    	var json = {dictionaries: items, type: "historyStateUpdated"};
+    	var json = { dictionaries: items, type: "historyStateUpdated" };
     	sendMessage(json);
     })
 });
@@ -240,7 +240,7 @@ chrome.browserAction.onClicked.addListener(function(tab) {
 chrome.commands.onCommand.addListener(function(command) {
 	chrome.tabs.query({active: true, currentWindow: true},
 		function callback(tabs) {
-			chrome.tabs.sendMessage(tabs[0].id, {type: "toggleSearch"}, function (response) {
+			chrome.tabs.sendMessage(tabs[0].id, { type: "toggleSearch" }, function (response) {
 			})
 		}
 	);
