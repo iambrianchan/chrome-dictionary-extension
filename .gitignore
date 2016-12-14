@@ -22,6 +22,9 @@ coverage
 # Compiled binary addons
 build/Release
 
+#webpack build
+bin
+
 # Dependency directory
 node_modules
 public/components

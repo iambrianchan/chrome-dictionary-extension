@@ -3,13 +3,13 @@
 
   "name": "DE/ES/FR/IT to EN Dictionary",
   "description": "Lookup English translations of words and highlight them on the page.",
-  "version": "0.0.1.0",
+  "version": "0.0.1.1",
 
   "browser_action": {
-    "default_icon": "public/source/img/dict.png"
+    "default_icon": "public/src/img/dict.png"
   },
   "background": {
-    "scripts": ["public/source/js/background.js"]
+    "scripts": ["public/src/js/background.js"]
   },
   "commands": {
     "toggle-feature-search": {
@@ -26,14 +26,14 @@
   "content_scripts": [
     {
       "matches": ["http://*/*", "https://*/*"],
-      "js": ["public/source/js/contentscript.js"],
-      "css": ["public/source/css/content.css"]
+      "js": ["public/src/js/contentscript.js"],
+      "css": ["public/src/css/content.css"]
     }
   ],
   "icons": {
-      "16": "public/source/img/16.png",
-      "48": "public/source/img/48.png",
-      "128": "public/source/img/128.png"
+      "16": "public/src/img/16.png",
+      "48": "public/src/img/48.png",
+      "128": "public/src/img/128.png"
     },
   "permissions": [
     "storage",
@@ -41,10 +41,10 @@
     "webNavigation"
   ],
   "web_accessible_resources": [
-    "public/source/img/originals/de.png",
-    "public/source/img/originals/es.png",
-    "public/source/img/originals/fr.png",
-    "public/source/img/originals/it.png",
-    "public/source/img/glassGRAY.png"
+    "public/src/img/originals/de.png",
+    "public/src/img/originals/es.png",
+    "public/src/img/originals/fr.png",
+    "public/src/img/originals/it.png",
+    "public/src/img/glassGRAY.png"
   ]
 }

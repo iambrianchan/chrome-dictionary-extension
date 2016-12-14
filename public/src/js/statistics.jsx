@@ -1,3 +1,5 @@
+import Donut from "./donut.jsx";
+
 var statistics = React.createClass({
 	getInitialState: function() {
 		return {
@@ -85,6 +87,10 @@ var statistics = React.createClass({
     refreshDictionaries: function() {
     	var items = [];
         chrome.storage.local.get('dictionaries', function(result) {
+            if (Object.keys(result).length == 0) {
+                return;
+            }
+
             var keys = Object.keys(result.dictionaries).sort(function sortLanguagesAlphabetically(a, b) {
             	return a > b;
             })
@@ -180,6 +186,8 @@ var statistics = React.createClass({
             {this.state.activeDictionary.length > 0 && <div className="search"><input type="text" placeholder="Search for a word" value={this.activeQuery} onChange={this.filterDictionary.bind(this, this.activeQuery)}></input></div>}
             {instructions}
             {content}
+            {this.state.activeDictionary.length > 0 && <div id="statisticstitle">~Statistics~</div>}
+            <Donut data={displayedItems} />
             </div>
         )
     }

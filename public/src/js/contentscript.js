@@ -189,7 +189,7 @@ function toggleSearchBar() {
 		// create the magnifying glass icon
 		var glass = document.createElement("span");
 		var glassicon = document.createElement("img");
-		glassicon.src = chrome.extension.getURL("public/source/img/glassGRAY.png");
+		glassicon.src = chrome.extension.getURL("public/src/img/glassGRAY.png");
 		glass.appendChild(glassicon);
 		glass.className += " glass"
 
@@ -198,7 +198,7 @@ function toggleSearchBar() {
 		container.appendChild(searchbar);
 
 		// create the flag buttons
-		var languages = [chrome.extension.getURL("public/source/img/originals/de.png"), chrome.extension.getURL("public/source/img/originals/es.png"), chrome.extension.getURL("public/source/img/originals/fr.png"), chrome.extension.getURL("public/source/img/originals/it.png")]
+		var languages = [chrome.extension.getURL("public/src/img/originals/de.png"), chrome.extension.getURL("public/src/img/originals/es.png"), chrome.extension.getURL("public/src/img/originals/fr.png"), chrome.extension.getURL("public/src/img/originals/it.png")];
 		var languagescontainer = document.createElement("div");
 		for (var i = 0; i < languages.length; i++) {
 			var btn = document.createElement("button");

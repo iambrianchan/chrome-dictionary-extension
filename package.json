@@ -1,21 +1,30 @@
 {
   "name": "dictionary-extension",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Chrome extension for multi language dictionary",
   "main": "index.js",
   "scripts": {
+    "start": "grunt",
     "build": "node_modules/webpack/bin/webpack.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Brian Chan",
   "license": "ISC",
   "devDependencies": {
-    "webpack": "^1.13.1"
+    "babel-core": "^6.20.0",
+    "babel-loader": "^6.2.9",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-react": "^6.16.0",
+    "grunt": "^1.0.1",
+    "grunt-webpack": "^1.0.18"
   },
   "dependencies": {
+    "d3": "^3.5.17",
     "jsx-loader": "^0.13.2",
     "react": "^15.3.0",
     "react-bootstrap": "^0.30.2",
-    "react-dom": "^15.3.0"
+    "react-dom": "^15.3.0",
+    "react-faux-dom": "^3.0.0",
+    "webpack": "^1.14.0"
   }
 }

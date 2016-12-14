@@ -233,7 +233,7 @@ chrome.webNavigation.onHistoryStateUpdated.addListener(function (details) {
 });
 chrome.browserAction.onClicked.addListener(function(tab) { 
 	chrome.tabs.create({
-		url: 'public/source/views/home.html'
+		url: 'public/src/views/home.html'
 	})
 });
 

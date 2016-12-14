@@ -125,3 +125,33 @@ button.delete {
 button > span {
 	vertical-align: middle;
 }
+
+
+
+/*  Graphs  */
+
+div#statisticstitle {
+	text-align: center;
+	font-size: 40px;
+	margin: 30px 0px 30px 0px;
+}
+svg.donut {
+	display: block;
+	margin: 0 auto;
+}
+div#tooltipcontainer {
+	width: 100%;
+	min-height: 20px;
+	background-color: #F2F2F2;
+}
+div#tooltip {
+	position: absolute;
+	background-color: #4682B4;
+	border-radius: 16px;
+	padding: 10px 10px 10px 10px;
+	color: white;
+	font-weight: 500;
+	font-size: 20px;
+	box-shadow: 1px 1px #4682B4;
+	opacity: 0;
+}
