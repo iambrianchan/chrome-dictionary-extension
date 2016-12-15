@@ -1,6 +1,5 @@
 var d3 = require('d3');
 var ReactFauxDom = require('react-faux-dom');
-console.log(d3);
 var graphs = React.createClass({
 
 	componentDidMount: function() {
@@ -74,7 +73,6 @@ var graphs = React.createClass({
 		    .attr("d", arc)
 		  .on("click", function(d) {
 		  	transition(d, 1);
-		  	console.log(d3.event);
             tooltip.transition()
 	           .duration(200)
 	           .style("opacity", .9)

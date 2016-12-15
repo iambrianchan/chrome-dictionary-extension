@@ -60,8 +60,8 @@ function createDictionaryPopup(word) {
 		if (partOfSpeech.meanings[0].meaning) {
 			var meaningContent = document.createElement("p");
 			var number = document.createElement("span");
-			number.className = "enumerable";
 			var meaningText = document.createElement("span");
+			number.className = "enumerable";
 			number.textContent = i + 1 + " ";
 			meaningContent.appendChild(number);
 			meaningText.textContent = "Meaning: " + partOfSpeech.meanings[0].meaning;
@@ -73,9 +73,9 @@ function createDictionaryPopup(word) {
 			var expression = document.createElement("p");
 			var target = document.createElement("span");
 			var source = document.createElement("span");
+			var linebreak = document.createElement("br");
 			target.className = "example";
 			source.className = "example";
-			var linebreak = document.createElement("br");
 			target.textContent = partOfSpeech.meanings[0].expressions[0].target;
 			source.textContent = partOfSpeech.meanings[0].expressions[0].source;
 			expression.appendChild(source);
@@ -244,12 +244,14 @@ function toggleSearchBar() {
 		var input = globalsearch.childNodes[0].childNodes[1];
 		input.value = selectedText;
 	}
+
 	// focus the new input element
 	var input = document.body.getElementsByClassName("globalsearchcontainer")[0].childNodes[0];
 	input = input.getElementsByTagName("input")[0];
 	input.focus();
 }
 
+// traverses DOM elements to find leaf nodes
 function traverse(item, words) {
 	if (item.childNodes.length > 0) {
 		for (var i = 0; i < item.childNodes.length; i++) {
@@ -261,6 +263,7 @@ function traverse(item, words) {
 	}
 }
 
+// creates hover-able elements on page
 function createElement(item, words) {
 	try {
 		if (item.parentNode.className.indexOf("custom-dictionary") == -1 && item.parentNode.parentNode.className.indexOf("custom-dictionary") == -1 && item.parentNode.className.indexOf("definition") == -1  && item.parentNode.parentNode.className.indexOf("definition") == -1 && item.parentNode.tagName == "P") {
@@ -316,6 +319,7 @@ function createElement(item, words) {
 						resultElements.push(textNode);
 					}
 				}
+				// replace the entire element with the contents of resultElements
 				for (var i = resultElements.length - 1; i >= 0; i--) {
 					if (typeof resultElements[i] == "string") {
 						item.parentNode.insertBefore(document.createTextNode(resultElements[i] + ' '), item.nextSibling);							
@@ -328,8 +332,9 @@ function createElement(item, words) {
 			}
 		}
 	}
+	// catch an error if it occurs
 	catch (e) {
-		// console.log('an error ocurred adding a definition element to the page', e);
+		return;
 	}
 }
 

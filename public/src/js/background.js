@@ -8,8 +8,8 @@ var systranApi = function() {
 	function handleSystranResponse(response, word, language) {
 		var data = {};
 		var result = JSON.parse(response);
-		data.term = word.toLowerCase();
 		var partsOfSpeech = parseDictionaryResult(result);
+		data.term = word.toLowerCase();
 		data.partsOfSpeech = partsOfSpeech;
 
 		chrome.storage.local.get('dictionaries', function callback(items) {
@@ -24,8 +24,8 @@ var systranApi = function() {
 			}
 			if (items.dictionaries[language] == undefined) {
 				var words = [];
-				words.push(data);
 				var languageDict = { dictionaries: items.dictionaries };
+				words.push(data);
 				languageDict.dictionaries[language] = words;
 				chrome.storage.local.set(languageDict, function callback() {
 					var json = { words: words, language: language, type: "lookup" };
@@ -219,7 +219,9 @@ function sendMessage (json) {
 	chrome.tabs.query({active: true, currentWindow: true},
 		function callback(tabs) {
 			chrome.tabs.sendMessage(tabs[0].id, json, function (response) {
-			})
+			});
+			chrome.runtime.sendMessage(json, function (response){
+			});
 		}
 	);
 }

@@ -83,6 +83,15 @@ var statistics = React.createClass({
     },
     componentDidMount: function() {
     	this.refreshDictionaries();
+        chrome.runtime.onMessage.addListener(
+            function(request, sender, sendResponse) {
+
+                // if the request is lookup, refresh the dictionary
+                if (request.type == "lookup") {
+                    this.refreshDictionaries();       
+                }
+            }.bind(this)
+        );
     },
     refreshDictionaries: function() {
     	var items = [];
@@ -107,7 +116,9 @@ var statistics = React.createClass({
         }.bind(this))
     },
     render: function() {
-    	var displayedItems = this.state.filteredDictionary.sort();
+    	var displayedItems = this.state.filteredDictionary.sort(function sortWordsAlphabetically(a, b) {
+            return a.term.localeCompare(b.term);
+        });
     	var content;
     	if (displayedItems.length > 0) {
     		var items = displayedItems.map(function(item) {
