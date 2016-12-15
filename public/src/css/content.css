@@ -60,18 +60,25 @@ div.globalsearchcontainer {
 	border-radius: 16px;
 	z-index: 999;
 	opacity: .9;
+	font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+	font-weight: 500;
+	-webkit-font-smoothing: antialiased;
 }
 div.globalsearchcontainer > div.searchbar {
 	margin: 0;
 	text-align: left;
 	line-height: 60px;
 }
+div.globalsearchcontainer span.glass {
+	font-size: 30px;
+	vertical-align: middle;
+}
 div.globalsearchcontainer span.glass img {
 	height: 20px;
 	margin-left: 15px;
 }
 div.globalsearchcontainer input {
-	font-size: 18px;
+	font-size: 30px;
 	color: white;
 	width: 50%;
 	padding-left: 10px;
@@ -81,6 +88,7 @@ div.globalsearchcontainer input {
 	background-color: #434647;
 	box-shadow: none;
 	text-transform: none;
+	vertical-align: middle;
 }
 div.globalsearchcontainer.hide {
 	display: none;
@@ -89,11 +97,14 @@ div.globalsearchcontainer > div {
 	width: 100%;
 }
 div.globalsearchcontainer > div.definitions {
-	font-size: 14px;
-}
-div.globalsearchcontainer > div.definitions > p > span.enumerable {
-	font-weight: bold;
 	font-size: 16px;
+}
+div.globalsearchcontainer > div.definitions p {
+	margin: 0;
+}
+div.globalsearchcontainer > div.definitions > div > p > span.enumerable {
+	font-weight: bold;
+	font-size: 18px;
 }
 div.globalsearchcontainer > div.definitions > div {
 	margin-left: 10px;
@@ -103,7 +114,7 @@ div.globalsearchcontainer > div.definitions > div > div.definition {
 	margin-left: 15px;
 	padding: 0px 0px 5px 0px;
 }
-div.globalsearchcontainer > div.definitions > div.definition > p > span {
+div.globalsearchcontainer > div.definitions > div > div.definition > p > span {
 	font-style: italic;
 }
 div.globalsearchcontainer > div.searchbar > div {
@@ -157,8 +168,11 @@ div.globalsearchcontainer img.searchlanguage {
 	}
 }
 @media only screen and (max-width: 992px) {
-	div.globalsearchcontainer div {
-		width: 96px;
+	div.globalsearchcontainer > div.searchbar {
+		width: 100%;
+	}
+	div.globalsearchcontainer > div.searchbar > input {
+		font-size: 20px;
 	}
 	div.globalsearchcontainer img.searchlanguage {
 		width: 24px;
